@@ -1,8 +1,10 @@
 package main;
 
 import java.io.BufferedReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.List;
 
 import server.Server;
@@ -17,6 +19,7 @@ public class LittleDistributedProgram {
 	public static void main(String[] args) throws IOException, InterruptedException {
 		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 		String buffer;
+		PrintWriter outfile = new PrintWriter(new FileWriter("RESAULT.txt"));
 		Client client;
 		String [] serverAddress = {"192.17.11.199","192.17.11.198"};
 		//start server
@@ -31,7 +34,7 @@ public class LittleDistributedProgram {
 			client = new Client(serverAddress, buffer);
 			List<String>result = client.getResult();
 			for(String line: result){
-				print(line);
+				outfile.println(line);
 			}
 		}
 	}
