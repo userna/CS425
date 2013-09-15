@@ -41,8 +41,8 @@ public class LogGenerator {
 		try {
 			line = br.readLine();
 			while (line != null) {
-				line = br.readLine();
 				outputToInAFile(generateTheLogFile(line), output);
+				line = br.readLine();
 			}
 			br.close();
 			output.close();
@@ -52,6 +52,7 @@ public class LogGenerator {
 		}
 
 	}
+
 	public String generateTheLogFile(String input){
 		String result="";
 		int i;
