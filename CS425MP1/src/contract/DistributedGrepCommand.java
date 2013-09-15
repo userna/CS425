@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class DistributedGrepCommand {
 	private String key;
 	private String value;
-	private static final String logfile = "machine.log";
-	
+	private String logfile = "machine.log";
+
 	public DistributedGrepCommand(String command){
 		String [] commands = command.split(" ");
 		for(int i = 1; i<commands.length; i+=2){
@@ -61,5 +61,13 @@ public class DistributedGrepCommand {
 		return result;
 	}
 	
+	
+	public String getLogfile() {
+		return logfile;
+	}
+
+	public void setLogfile(String logfile) {
+		this.logfile = logfile;
+	}
 
 }

@@ -41,6 +41,7 @@ public class LittleDistributedProgram {
 			List<String>result = client.getResult();
 			for(String line: result){
 				outfile.println(line);
+				outfile.flush();
 			}
 		}
 	}
