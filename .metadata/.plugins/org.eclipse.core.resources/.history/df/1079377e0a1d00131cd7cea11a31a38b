@@ -1,0 +1,29 @@
+package contract;
+
+public enum CommunicationContract {
+	SERVER_PORT(9881);
+	
+	private int intVal;
+	
+	CommunicationContract(int intVal){
+		this.intVal = intVal;
+	}
+
+	public int getValue() {
+		return intVal;
+	}
+}
+
+public enum CommunicationDirectives {
+	SHUT_DOWN("TEAR_DOWN_CONNECTION");
+	
+	private String strVal;
+	
+	CommunicationDirectives(String strVal){
+		this.strVal = strVal;
+	}
+	
+	public String getVaLue(){
+		return strVal;
+	}
+}
