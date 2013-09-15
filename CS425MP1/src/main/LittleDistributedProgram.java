@@ -18,7 +18,7 @@ public class LittleDistributedProgram {
 		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 		String buffer;
 		Client client;
-		String [] serverAddress = {"192.17.11.75","192.17.11.74"};
+		String [] serverAddress = {"192.17.11.199","192.17.11.198"};
 		//start server
 		Server testServer=new Server(PortNumbers.SERVER_PORT.getValue());
 		testServer.startRunning();
