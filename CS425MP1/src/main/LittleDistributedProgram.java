@@ -5,11 +5,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import server.Server;
 
 //import contract.DistributedGrepCommand;
+import contract.DistributedGrepCommand;
 import contract.LogGenerator;
 import contract.PortNumbers;
 
@@ -41,15 +43,20 @@ public class LittleDistributedProgram {
 			if(isExit(buffer)){
 				System.exit(0);
 			}
-//			if(isBadCommand(buffer)){
-//				continue;
-//			}			
+			if(isBadCommand(buffer)){
+				continue;
+			}
+			long timeElapsed = System.nanoTime();
 			client = new Client(serverAddress, buffer);
 			List<String>result = client.getResult();
+			ArrayList<String> localResult = new DistributedGrepCommand(buffer).executeCommand();
+			result.addAll(localResult);
 			for(String line: result){
 				outfile.println(line);
 				outfile.flush();
 			}
+			timeElapsed = System.nanoTime()-timeElapsed;
+			System.out.println("Time elapsed: "+(double)timeElapsed/1000000.0+"ms");
 		}
 	}
 		
@@ -75,7 +82,7 @@ public class LittleDistributedProgram {
 			}
 		}
 		print("Bad command, reenter");
-		return false;
+		return true;
 	}
 	private static boolean isExit(String command){
 		if(command.equals("exit")||command.equals("quit")){
@@ -88,7 +95,7 @@ public class LittleDistributedProgram {
 	}
 	
 	public static void main(String[] args) throws IOException, InterruptedException {
-		String[] serverAddress = {"192.17.11.187","192.17.11.186","192.17.11.199"};
+		String[] serverAddress = {"192.17.11.217","192.17.11.216","192.17.11.218"};
 		LittleDistributedProgram myProg = new LittleDistributedProgram(serverAddress);
 		myProg.run();
 	}

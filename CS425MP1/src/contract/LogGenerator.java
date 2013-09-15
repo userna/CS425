@@ -8,6 +8,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * Log Generator
+ * @author yuan chen
+ *
+ */
 public class LogGenerator {
 	private String inputTextDir;
 	private String outputTextDir;
@@ -15,16 +20,24 @@ public class LogGenerator {
 		LogGenerator test =new LogGenerator();
 		test.generate();
 	}
+	
 	public LogGenerator(){
 		this.inputTextDir="original.txt";
 		this.outputTextDir="example.txt";
 	}
+	
+	//setter functions
+	
 	public void setInputDir(String inputTextDir){
 		this.inputTextDir=inputTextDir;
 	}
 	public void setOutputDir(String outputTextDir){
 		this.outputTextDir=outputTextDir;
 	}
+	
+	/**
+	 * Generate log files
+	 */
 	public void generate(){
 		BufferedReader br=null;
 		BufferedWriter output=null;
@@ -47,17 +60,22 @@ public class LogGenerator {
 			br.close();
 			output.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
+	/**
+	 * Constructs a line in the log file
+	 * @param input
+	 * @return
+	 */
 	public String generateTheLogFile(String input){
 		String result="";
 		int i;
 		if(input==null||input.length()<=10||input.indexOf(' ')==-1)
 			return null;
+		//strip away punctuation and cases
 		input=input.toLowerCase();
 		StringBuilder key=new StringBuilder();
 		for (i = 0; i < input.length(); i++) {
@@ -69,9 +87,16 @@ public class LogGenerator {
 		}
 		if(key.length()==0)
 			return null;
+		//converts the line into the corre ct format
 		result=key.toString()+":"+input.substring(i+1,input.length()>=61?60:input.length()).trim();
 		return result;
 	}
+	
+	/**
+	 * Helper function that writes to file
+	 * @param needToBeOutPut
+	 * @param output
+	 */
 	public void outputToInAFile(String needToBeOutPut,BufferedWriter output){
 		if(needToBeOutPut==null)
 			return ;

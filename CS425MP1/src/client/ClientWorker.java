@@ -64,7 +64,11 @@ public class ClientWorker extends Thread{
 			//while not reading a tear down signal add to synchronizedResult
 			while(!((returnedLine = in.readLine()).equals(CommunicationDirectives.SHUT_DOWN.getVaLue()))){
 				synchronizedResult.add(returnedLine+" from "+serverAddress);
-			}			
+			}
+			synchronized(lock){
+				starter.setFailed(false);
+				lock.notify();
+			}
 		} catch (Exception e) {
 			restartWorker();
 			return;
@@ -75,17 +79,9 @@ public class ClientWorker extends Thread{
 				out.close();
 				socket.close();
 				System.out.println("Thread "+id+" has finished!");
-				synchronized(lock){
-					starter.setFailed(false);
-					lock.notify();
-				}
 			}
 			catch(IOException e){
 				System.out.println("Thread "+Integer.toString(id)+" didn't successfully close the sockets");
-				synchronized(lock){
-					starter.setFailed(false);
-					lock.notify();
-				}
 				return;
 			}
 		}	
@@ -97,7 +93,7 @@ public class ClientWorker extends Thread{
 	private void restartWorker(){
 		System.out.println("Thread "+Integer.toString(id)+" has failed us....restarting");
 		synchronized(lock){
-			starter.setFailed(false);
+			starter.setFailed(true);
 			lock.notify();
 		}
 	}

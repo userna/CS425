@@ -21,10 +21,11 @@ public class TestCaseForConnectionBetweenMachine {
 	}
 	@Test
 	/*
-	 * this test is for grep command get all data from a doma distributed system
+	 * this test is for grep command get all data from a distributed system
 	 */
 	public void testGrepCommandInDistributedSystem(){
-		LittleDistributedProgram test=new LittleDistributedProgram();
+		String[] serverAddress = {"192.17.11.187","192.17.11.186","192.17.11.199"};
+		LittleDistributedProgram test=new LittleDistributedProgram(serverAddress);
 		
 	}
 }
