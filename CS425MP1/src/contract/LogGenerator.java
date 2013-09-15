@@ -9,19 +9,29 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class LogGenerator {
-
+	private String inputTextDir;
+	private String outputTextDir;
 	public static void main(String argv){
 		LogGenerator test =new LogGenerator();
-		test.file();
+		test.generate();
 	}
-
-	public void file(){
+	public LogGenerator(){
+		this.inputTextDir="original.txt";
+		this.outputTextDir="example.txt";
+	}
+	public void setInputDir(String inputTextDir){
+		this.inputTextDir=inputTextDir;
+	}
+	public void setOutputDir(String outputTextDir){
+		this.outputTextDir=outputTextDir;
+	}
+	public void generate(){
 		BufferedReader br=null;
 		BufferedWriter output=null;
 		try {
-			File file = new File("example.txt");
-			br = new BufferedReader(new FileReader("original"));
-			output = new BufferedWriter(new FileWriter(file));
+			File fileWrite = new File(outputTextDir);
+			br = new BufferedReader(new FileReader(inputTextDir));
+			output = new BufferedWriter(new FileWriter(fileWrite));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -50,8 +60,10 @@ public class LogGenerator {
 		input=input.toLowerCase();
 		StringBuilder key=new StringBuilder();
 		for (i = 0; i < input.length(); i++) {
-			if(input.charAt(i)!=' '&&input.charAt(i)<='z'&&input.charAt(i)>='a')
-				key.append(input.charAt(i));
+			if(input.charAt(i)!=' '){
+				if(input.charAt(i)<='z'&&input.charAt(i)>='a')
+					key.append(input.charAt(i));
+				}
 			else break;
 		}
 		if(key.length()==0)
