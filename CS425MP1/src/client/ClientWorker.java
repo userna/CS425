@@ -19,12 +19,16 @@ public class ClientWorker extends Thread{
 	private String command;
 	private List<String> synchronizedResult;
 	private int id;
-	public ClientWorker(String ipAddress, String command, List<String> synchronizedResult, int id){
+	private ClientWorkerStarter starter;
+	private Object lock;
+	
+	public ClientWorker(String ipAddress, String command, List<String> synchronizedResult, int id, Object lock, ClientWorkerStarter clientWorkerStarter){
 		this.serverAddress = ipAddress;
 		this.command = command;
 		this.synchronizedResult = synchronizedResult;
 		this.id = id;
-		
+		this.starter = clientWorkerStarter;
+		this.lock = lock;		
 	}
 	public void run(){
 		socket = null;
@@ -36,19 +40,19 @@ public class ClientWorker extends Thread{
 			out = new PrintWriter(socket.getOutputStream(), true);
 		}
 		catch (IOException e){
-			System.out.println("Thread "+Integer.toString(id)+" has failed us....restarting");
+			handleException();
 			return;
 		}
 		try {
 			String returnedLine;
 			System.out.println("Sending Command: "+command);
 			out.println(command);
-			//while not reading a tear down signal
+			//while not reading a tear down signal add to synchronizedResult
 			while(!((returnedLine = in.readLine()).equals(CommunicationDirectives.SHUT_DOWN.getVaLue()))){
 				synchronizedResult.add(returnedLine+" from "+serverAddress);
 			}			
 		} catch (Exception e) {
-			System.out.println("Thread "+Integer.toString(id)+" has failed us....restarting");
+			handleException();
 			return;
 		}
 		finally{
@@ -57,11 +61,17 @@ public class ClientWorker extends Thread{
 				out.close();
 				socket.close();
 				System.out.println("Thread "+id+" has finished!");
+				starter.setFailed(false);
+				lock.notify();
 			}
 			catch(IOException e){
-				System.out.println("Thread "+Integer.toString(id)+" has failed us....restarting");
+				System.out.println("Thread "+Integer.toString(id)+" didn't successfully close the sockets");
 				return;
 			}
 		}	
+	}
+	private void handleException(){
+		System.out.println("Thread "+Integer.toString(id)+" has failed us....restarting");
+		lock.notify();
 	}
 }
