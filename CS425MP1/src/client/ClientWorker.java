@@ -75,13 +75,17 @@ public class ClientWorker extends Thread{
 				out.close();
 				socket.close();
 				System.out.println("Thread "+id+" has finished!");
-				starter.setFailed(false);
-				lock.notify();
+				synchronized(lock){
+					starter.setFailed(false);
+					lock.notify();
+				}
 			}
 			catch(IOException e){
 				System.out.println("Thread "+Integer.toString(id)+" didn't successfully close the sockets");
-				starter.setFailed(false);
-				lock.notify();
+				synchronized(lock){
+					starter.setFailed(false);
+					lock.notify();
+				}
 				return;
 			}
 		}	
@@ -92,6 +96,9 @@ public class ClientWorker extends Thread{
 	 */
 	private void restartWorker(){
 		System.out.println("Thread "+Integer.toString(id)+" has failed us....restarting");
-		lock.notify();
+		synchronized(lock){
+			starter.setFailed(false);
+			lock.notify();
+		}
 	}
 }

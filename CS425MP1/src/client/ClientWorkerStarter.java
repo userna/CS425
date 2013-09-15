@@ -31,6 +31,7 @@ public class ClientWorkerStarter extends Thread{
 	 */
 	public void run(){
 		//while the worker failed restart the worker then wait for its signal
+		synchronized(lock){
 		while(failed){
 			try {
 				//start worker thread
@@ -41,7 +42,8 @@ public class ClientWorkerStarter extends Thread{
 				e.printStackTrace();
 			}
 		}
-		System.out.println("Starter for worker "+threadId+ " has finished!");
+			System.out.println("Starter for worker "+threadId+ " has finished!");
+		}
 	}
 
 	/**
