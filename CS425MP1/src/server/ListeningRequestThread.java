@@ -14,7 +14,7 @@ public class ListeningRequestThread extends Thread {
 		while(flag){
 			try {
 				System.out.println("server running");
-				Socket newClientSocket=serverToListening.serverSocket.accept();
+				Socket newClientSocket=serverToListening.getServerSocket().accept();
 				ThreadHandler newThread=new ThreadHandler(newClientSocket,serverToListening);
 				serverToListening.numOfClients++;
 				newThread.start();

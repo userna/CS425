@@ -23,11 +23,15 @@ import client.Client;
 public class LittleDistributedProgram {
 	
 	public static void main(String[] args) throws IOException, InterruptedException {
+		LogGenerator test=new LogGenerator();
+		test.setInputDir("test/test1");
+		test.setOutputDir("test/expected");
+		test.generate();
 		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 		String buffer;
 		PrintWriter outfile = new PrintWriter(new FileWriter("RESAULT.txt"));
 		Client client;
-		String [] serverAddress = {"192.17.11.199","192.17.11.198"};
+		String [] serverAddress = {"192.17.11.187","192.17.11.186"};
 		//start server
 		Server testServer=new Server(PortNumbers.SERVER_PORT.getValue());
 		testServer.startRunning();

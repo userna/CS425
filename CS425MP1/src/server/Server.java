@@ -7,7 +7,7 @@ import java.net.ServerSocket;
 public class Server{
 	int numOfClients;
 	private ListeningRequestThread lRT;
-	ServerSocket serverSocket=null;
+	private ServerSocket serverSocket=null;
 	public Server(int serverPort){
 		numOfClients=0;
 		try {
@@ -22,7 +22,9 @@ public class Server{
 		lRT=new ListeningRequestThread(this);
 		lRT.start();  //this thread will handle the listening part
 	}
-
+	public ServerSocket getServerSocket(){
+		return this.serverSocket;
+	}
 
 }
 
