@@ -49,10 +49,10 @@ public class DistributedGrepCommand {
 		return result;
 	}
 	
-	public static void main (String[] args) throws IOException, InterruptedException{
-		DistributedGrepCommand cmd = new DistributedGrepCommand("grep -v solve");
-		ArrayList<String> lis = cmd.executeCommand();
-		lis.size();
-	}
+//	public static void main (String[] args) throws IOException, InterruptedException{
+//		DistributedGrepCommand cmd = new DistributedGrepCommand("grep -v solve");
+//		ArrayList<String> lis = cmd.executeCommand();
+//		lis.size();
+//	}
 
 }

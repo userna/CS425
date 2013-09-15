@@ -10,6 +10,7 @@ import java.util.List;
 import server.Server;
 
 //import contract.DistributedGrepCommand;
+import contract.LogGenerator;
 import contract.PortNumbers;
 
 import client.Client;
@@ -17,6 +18,8 @@ import client.Client;
 public class LittleDistributedProgram {
 	
 	public static void main(String[] args) throws IOException, InterruptedException {
+		LogGenerator test =new LogGenerator();
+		test.file();
 		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 		String buffer;
 		PrintWriter outfile = new PrintWriter(new FileWriter("RESAULT.txt"));
