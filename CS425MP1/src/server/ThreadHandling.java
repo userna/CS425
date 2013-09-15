@@ -19,29 +19,17 @@ public class ThreadHandling extends Thread{
 	}
 	public void run(){   //this handle all the inner logic
 		BufferedReader is;
-		PrintStream os;
 		try {
 			is = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()));
-			os = new PrintStream(clientSocket.getOutputStream(),true);
 			String commandFromClient=null;
-			try {
-				while(!clientSocket.isClosed()){//check every 100mi
-					Thread.sleep(100);
-					commandFromClient=is.readLine();
-					break;
-				}
+				commandFromClient=is.readLine();
 				System.out.println(commandFromClient);
-				DistributedGrepCommand grepCommand=new DistributedGrepCommand(commandFromClient);
-				ArrayList<String> result=grepCommand.executeCommand();
-				for (int i = 0; i < result.size(); i++) {
-					os.println(result.get(i));
-				}
-				os.println(CommunicationDirectives.SHUT_DOWN.getVaLue());
-			}
-			catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+				ArrayList<String> result = executeGrepCommand(commandFromClient);
+				outPutToClient(result);
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally{
@@ -54,5 +42,18 @@ public class ThreadHandling extends Thread{
 			}
 			
 		}
+	}
+	private ArrayList<String> executeGrepCommand(String commandFromClient)
+			throws IOException, InterruptedException {
+		DistributedGrepCommand grepCommand=new DistributedGrepCommand(commandFromClient);
+		ArrayList<String> result=grepCommand.executeCommand();
+		return result;
+	}
+	private void outPutToClient(ArrayList<String> result) throws IOException {
+		PrintStream os = new PrintStream(clientSocket.getOutputStream(),true);
+		for (int i = 0; i < result.size(); i++) {
+			os.println(result.get(i));
+		}
+		os.println(CommunicationDirectives.SHUT_DOWN.getVaLue());
 	}
 }
