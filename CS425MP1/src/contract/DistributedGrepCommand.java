@@ -5,6 +5,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+/**
+ * This class captures the grep command
+ *
+ * @author gchen10
+ *
+ */
 public class DistributedGrepCommand {
 	private String key;
 	private String value;
@@ -27,6 +33,12 @@ public class DistributedGrepCommand {
 		}		
 	}
 
+	/**
+	 * execute command using local system
+	 * @return resulting lines from grep
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	public ArrayList<String> executeCommand() throws IOException, InterruptedException{
 		Runtime r = Runtime.getRuntime();
 		Process p = null;
@@ -49,10 +61,4 @@ public class DistributedGrepCommand {
 		return result;
 	}
 	
-	public static void main (String[] args) throws IOException, InterruptedException{
-		DistributedGrepCommand cmd = new DistributedGrepCommand("grep -v solve");
-		ArrayList<String> lis = cmd.executeCommand();
-		lis.size();
-	}
-
 }

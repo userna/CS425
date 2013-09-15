@@ -2,6 +2,11 @@ package client;
 
 import java.util.List;
 
+/**
+ * Starts and restarts worker
+ * @author gchen10
+ *
+ */
 public class ClientWorkerStarter extends Thread{
 	private int threadId;
 	private Object lock;
@@ -20,21 +25,29 @@ public class ClientWorkerStarter extends Thread{
 		failed = true;
 	}
 
+	/**
+	 * pass worker the relevant information
+	 * then wait for worker to signal success or failure
+	 */
 	public void run(){
-		while(!failed){
+		//while the worker failed restart the worker then wait for its signal
+		while(failed){
 			try {
 				//start worker thread
 				ClientWorker newWorker = new ClientWorker(serverIP, command, resultStr, threadId, lock, this);
 				newWorker.start();
 				lock.wait();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		System.out.println("Starter for worker "+threadId+ " has finished!");
 	}
 
+	/**
+	 * Getter for failed variable
+	 * @param failed
+	 */
 	public void setFailed(boolean failed) {
 		this.failed = failed;
 	}
