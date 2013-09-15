@@ -21,22 +21,29 @@ import client.Client;
  *
  */
 public class LittleDistributedProgram {
+	private static String[] serverAddress;
 	
-	public static void main(String[] args) throws IOException, InterruptedException {
+	public LittleDistributedProgram(String[] serverAddress){
+		this.serverAddress = serverAddress;
+	}
+	
+	public void run() throws IOException, InterruptedException {
 		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 		String buffer;
 		PrintWriter outfile = new PrintWriter(new FileWriter("RESAULT.txt"));
 		Client client;
-		String [] serverAddress = {"192.17.11.199","192.17.11.198"};
 		//start server
 		Server testServer=new Server(PortNumbers.SERVER_PORT.getValue());
 		testServer.startRunning();
 		while(true){
 			print("Input grep command");
 			buffer = stdin.readLine();
-			if(isBadCommand(buffer)){
-				continue;
+			if(isExit(buffer)){
+				System.exit(0);
 			}
+//			if(isBadCommand(buffer)){
+//				continue;
+//			}			
 			client = new Client(serverAddress, buffer);
 			List<String>result = client.getResult();
 			for(String line: result){
@@ -45,14 +52,44 @@ public class LittleDistributedProgram {
 			}
 		}
 	}
+		
 	private static boolean isBadCommand(String command){
 		if ((command.split(" ")).length!=3 && (command.split(" ")).length!=5){
 			print("Bad command, reenter");
+			return true;
+		}
+		String[] literals = command.split(" ");
+		if(literals[0].equals("grep")){
+			if(literals.length==3){
+				//if the grep command contains the correct flags
+				if(literals[1].equals("-v")||literals[1].equals("-k")){
+					return false;
+				}
+			}
+			else if(literals.length==5){
+				//if the grep command contains the correct flags.
+				if((literals[1].equals("-v")||literals[1].equals("-k")) && 
+						(literals[3].equals("-v")||literals[3].equals("-k"))){
+					return false;
+				}
+			}
+		}
+		print("Bad command, reenter");
+		return false;
+	}
+	private static boolean isExit(String command){
+		if(command.equals("exit")||command.equals("quit")){
 			return true;
 		}
 		return false;
 	}
 	private static void print(String str){
 		System.out.println(str);
+	}
+	
+	public static void main(String[] args) throws IOException, InterruptedException {
+		String[] serverAddress = {"192.17.11.187","192.17.11.186","192.17.11.199"};
+		LittleDistributedProgram myProg = new LittleDistributedProgram(serverAddress);
+		myProg.run();
 	}
 }
