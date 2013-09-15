@@ -1,5 +1,10 @@
 package contract;
 
+/**
+ * Agreed port numbers between server and client
+ * @author gchen10
+ *
+ */
 public enum PortNumbers {
 	SERVER_PORT(9881);
 	

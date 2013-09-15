@@ -15,6 +15,11 @@ import contract.PortNumbers;
 
 import client.Client;
 
+/**
+ * Main program
+ * @author gchen10
+ *
+ */
 public class LittleDistributedProgram {
 	
 	public static void main(String[] args) throws IOException, InterruptedException {
