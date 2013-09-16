@@ -3,6 +3,11 @@ package server;
 import java.io.IOException;
 import java.net.Socket;
 
+/**
+ * Open a thread for the blocking accept call
+ * @author Yuan Chen
+ *
+ */
 public class ListeningRequestThread extends Thread {
 	boolean flag=true;
 	Server serverToListening;

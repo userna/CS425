@@ -3,7 +3,11 @@ package server;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-
+/**
+ * Server procedure starts listening thread
+ * @author Gong
+ *
+ */
 public class Server{
 	int numOfClients;
 	private ListeningRequestThread lRT;

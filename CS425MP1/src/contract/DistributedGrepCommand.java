@@ -16,19 +16,28 @@ public class DistributedGrepCommand {
 	private String value;
 	private String logfile = "machine.log";
 
+	/**
+	 * the command is pre validated on input to get rid of erroneous command
+	 * @param command
+	 */
 	public DistributedGrepCommand(String command){
 		String [] commands = command.split(" ");
+		key = null;
+		value = null;
 		for(int i = 1; i<commands.length; i+=2){
 			String flag = commands[i];
 			String regex = commands[i+1];
-			key = null;
-			value = null;
+			
 			if(flag.equals("-v")){
 				value = regex;
 			}
 			else if(flag.equals("-k")){
 				
 				key = regex;
+			}
+			if(i==commands.length-3){
+				logfile = commands[i+2];
+				break;
 			}
 		}		
 	}
@@ -61,9 +70,26 @@ public class DistributedGrepCommand {
 		return result;
 	}
 	
+	//getters and setters
 	
 	public String getLogfile() {
 		return logfile;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	public void setLogfile(String logfile) {
