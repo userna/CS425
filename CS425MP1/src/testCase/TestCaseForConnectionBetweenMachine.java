@@ -20,12 +20,34 @@ public class TestCaseForConnectionBetweenMachine {
 		Assert.assertNotNull(test.getServerSocket());
 	}
 	@Test
-	/*
-	 * this test is for grep command get all data from a distributed system
+	/**
+	 * Test query item exist only in one file
 	 */
-	public void testGrepCommandInDistributedSystem(){
-		String[] serverAddress = {"192.17.11.187","192.17.11.186","192.17.11.199"};
-		LittleDistributedProgram test=new LittleDistributedProgram(serverAddress);
+	public void testExistOneFile(){
+		
+	}
+	
+	@Test
+	/**
+	 * Test query item exist in no file
+	 */
+	public void testExistNoFile(){
+		
+	}
+	
+	@Test
+	/**
+	 * Test query item exist in some files
+	 */
+	public void testExistSomeFile(){
+		
+	}
+	
+	@Test
+	/**
+	 * Test query item exist in all files
+	 */
+	public void testExistAllFile(){
 		
 	}
 }
