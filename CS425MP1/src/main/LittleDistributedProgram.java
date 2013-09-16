@@ -43,12 +43,14 @@ public class LittleDistributedProgram {
 	public void run() throws IOException, InterruptedException {
 		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 		String buffer;
+		//use to run the pre-specified command only once
+		boolean loop = true;
 		PrintWriter outfile = new PrintWriter(new FileWriter("RESAULT.txt"));
 		Client client;
 		//start server
 		Server server=new Server(PortNumbers.SERVER_PORT.getValue());
 		server.startRunning();
-		while(true){
+		while(loop){
 			print("Input grep command");
 			if(commandToRun==null){
 				buffer = stdin.readLine();
@@ -56,6 +58,7 @@ public class LittleDistributedProgram {
 			else{
 				buffer = commandToRun;
 				print(commandToRun);
+				loop = false;
 			}
 			if(isExit(buffer)){
 				System.exit(0);
@@ -135,7 +138,7 @@ public class LittleDistributedProgram {
 	 * @throws InterruptedException
 	 */
 	public static void main(String[] args) throws IOException, InterruptedException {
-		String[] serverAddress = {"192.17.11.66","192.17.11.68","192.17.11.67"};
+		String[] serverAddress = {"192.17.11.72","192.17.11.68","192.17.11.67"};
 		LittleDistributedProgram myProg = new LittleDistributedProgram(serverAddress, null);
 		myProg.run();
 	}

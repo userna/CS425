@@ -31,13 +31,14 @@ public class TestCaseForConnectionBetweenMachine {
 	 * Test query item exist only in one file
 	 */
 	public void testExistOneFile() throws IOException, InterruptedException{
-		String[] serverAdresses = {"192.168.1.100","192.168.1.101","192.168.1.102"};
-		String commandToRun = "grep -k log1 unique.log";
+		String[] serverAdresses = {"192.17.11.72","192.17.11.68","192.17.11.67"};
+		String commandToRun = "grep -k log2 unique.log";
 		LittleDistributedProgram test = new LittleDistributedProgram(serverAdresses, commandToRun);
 		test.run();
 		List<String> result = test.getResult();
+		System.out.println(result.get(0));
 		Assert.assertEquals(1, result.size());
-		Assert.assertEquals("log1:unique", result.get(0));
+		Assert.assertEquals("log2:unique from 192.17.11.67", result.get(0));
 	}
 	
 	@Test
@@ -45,8 +46,8 @@ public class TestCaseForConnectionBetweenMachine {
 	 * Test query item exist in no file
 	 */
 	public void testExistNoFile() throws IOException, InterruptedException{
-		String[] serverAdresses = {"192.168.1.100","192.168.1.101","192.168.1.102"};
-		String commandToRun = "grep -k log1 no.log";
+		String[] serverAdresses = {"192.17.11.72","192.17.11.68","192.17.11.67"};
+		String commandToRun = "grep -k log no.log";
 		LittleDistributedProgram test = new LittleDistributedProgram(serverAdresses, commandToRun);
 		test.run();
 		List<String> result = test.getResult();
@@ -58,14 +59,14 @@ public class TestCaseForConnectionBetweenMachine {
 	 * Test query item exist in some files
 	 */
 	public void testExistSomeFile() throws IOException, InterruptedException{
-		String[] serverAdresses = {"192.168.1.100","192.168.1.101","192.168.1.102"};
+		String[] serverAdresses = {"192.17.11.72","192.17.11.68","192.17.11.67"};
 		String commandToRun = "grep -k some some.log";
 		LittleDistributedProgram test = new LittleDistributedProgram(serverAdresses, commandToRun);
 		test.run();
 		List<String> result = test.getResult();
 		Assert.assertEquals(2, result.size());
-		Assert.assertEquals(true, result.contains("some:some1"));
-		Assert.assertEquals(true, result.contains("some:some2"));
+		Assert.assertEquals(true, result.contains("some:some1 from 192.17.11.67"));
+		Assert.assertEquals(true, result.contains("some:some2 from 192.17.11.67"));
 	}
 	
 	@Test
@@ -73,14 +74,20 @@ public class TestCaseForConnectionBetweenMachine {
 	 * Test query item exist in all files
 	 */
 	public void testExistAllFile() throws IOException, InterruptedException{
-		String[] serverAdresses = {"192.168.1.100","192.168.1.101","192.168.1.102"};
+		String[] serverAdresses = {"192.17.11.72","192.17.11.68","192.17.11.67"};
 		String commandToRun = "grep -k all all.log";
 		LittleDistributedProgram test = new LittleDistributedProgram(serverAdresses, commandToRun);
 		test.run();
 		List<String> result = test.getResult();
-		Assert.assertEquals(2, result.size());
-		Assert.assertEquals(true, result.contains("all:all1"));
-		Assert.assertEquals(true, result.contains("all:all2"));
-		Assert.assertEquals(true, result.contains("all:all3"));
+		Assert.assertEquals(9, result.size());
+		Assert.assertEquals(true, result.contains("all:all1 from 192.17.11.72"));
+		Assert.assertEquals(true, result.contains("all:all2 from 192.17.11.72"));
+		Assert.assertEquals(true, result.contains("all:all3 from 192.17.11.72"));
+		Assert.assertEquals(true, result.contains("all:all1 from 192.17.11.68"));
+		Assert.assertEquals(true, result.contains("all:all2 from 192.17.11.68"));
+		Assert.assertEquals(true, result.contains("all:all3 from 192.17.11.68"));
+		Assert.assertEquals(true, result.contains("all:all1 from 192.17.11.67"));
+		Assert.assertEquals(true, result.contains("all:all2 from 192.17.11.67"));
+		Assert.assertEquals(true, result.contains("all:all3 from 192.17.11.67"));
 	}
 }
