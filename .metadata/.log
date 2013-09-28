@@ -17,3 +17,6 @@ Command-line arguments:  -data C:\Users\chenyuan\Documents\GitHub\CS425 -os win3
 
 !ENTRY org.eclipse.core.net 1 0 2013-09-27 23:06:27.307
 !MESSAGE System property http.proxyPort is set to 1064 but should not be set.
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2013-09-27 23:16:56.646
+!MESSAGE Failed to open search index.
