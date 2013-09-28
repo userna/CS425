@@ -1,0 +1,19 @@
+!SESSION 2013-09-27 23:06:21.796 -----------------------------------------------
+eclipse.buildId=M20120914-1800
+java.version=1.7.0_06
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.rcp.product
+Command-line arguments:  -data C:\Users\chenyuan\Documents\GitHub\CS425 -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.rcp.product
+
+!ENTRY org.eclipse.core.net 1 0 2013-09-27 23:06:27.292
+!MESSAGE System property http.proxyHost is set to 127.0.0.1 but should not be set.
+
+!ENTRY org.eclipse.core.net 1 0 2013-09-27 23:06:27.296
+!MESSAGE System property http.proxyPort is set to 1064 but should not be set.
+
+!ENTRY org.eclipse.core.net 1 0 2013-09-27 23:06:27.307
+!MESSAGE System property http.proxyHost is set to 127.0.0.1 but should not be set.
+
+!ENTRY org.eclipse.core.net 1 0 2013-09-27 23:06:27.307
+!MESSAGE System property http.proxyPort is set to 1064 but should not be set.
